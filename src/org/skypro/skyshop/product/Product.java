@@ -1,13 +1,19 @@
 package org.skypro.skyshop.product;
 
-public class Product {
-    private final String productName;
-    private final int productPrice;
-    private static int checkIsBasketFull = 0;
+public abstract class Product {
+    protected final String productName;
+    protected static int checkIsBasketFull = 0;
 
     public Product(String productName, int productPrice) {
         this.productName = productName;
-        this.productPrice = productPrice;
+    }
+
+    public boolean isSpecial(int checkIsSpecial) {
+        boolean isSpecial = false;
+        if (checkIsSpecial != 0) {
+            isSpecial = true;
+        }
+        return isSpecial;
     }
 
     public static int getCheckIsBasketFull() {
@@ -22,7 +28,7 @@ public class Product {
         return productName;
     }
 
-    public int getProductPrice() {
-        return productPrice;
-    }
+    public abstract int getPrice();
+
+    public abstract boolean isSpecial();
 }

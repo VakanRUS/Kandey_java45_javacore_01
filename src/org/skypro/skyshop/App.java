@@ -6,15 +6,15 @@ import org.skypro.skyshop.product.Product;
 public class App {
     public static void main(String[] args) {
         System.out.println("1. Добавление продукта в корзину.");
-        Basket.addToBasket("Яблоки", 50);
-        Basket.addToBasket("Вишня", 100);
-        Basket.addToBasket("Картошка", 60);
-        Basket.addToBasket("Кефир", 90);
-        Basket.addToBasket("Хлеб", 40);
+        Basket.addFixPricedProduct("Яблоки");
+        Basket.addSimpleProduct("Вишня", 100);
+        Basket.addDiscountProduct("Картошка", 60);
+        Basket.addFixPricedProduct("Кефир");
+        Basket.addDiscountProduct("Хлеб", 40);
         System.out.println();
 
         System.out.println("2. Добавление продукта в заполненную корзину, в которой нет свободного места.");
-        Basket.addToBasket("Тест", 1000);
+        Basket.addSimpleProduct("Тест", 1000);
         System.out.println();
 
         System.out.println("3. Печать содержимого корзины с несколькими товарами.");
