@@ -1,63 +1,55 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.Basket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.tools.SearchEngine;
+import org.skypro.skyshop.tools.Searchable;
 
 public class App {
     public static void main(String[] args) {
-        Basket basket = new Basket();
+        Searchable[] found;
+        SearchEngine search = new SearchEngine(10);
+        String searchTerm;
 
-        SimpleProduct product1 = new SimpleProduct("Вишня", 100);
-        FixPriceProduct product2 = new FixPriceProduct("Яблоки");
-        DiscountedProduct product3 = new DiscountedProduct("Картошка", 60, 15);
-        FixPriceProduct product4 = new FixPriceProduct("Молоко");
-        DiscountedProduct product5 = new DiscountedProduct("Хлеб", 40, 15);
-        FixPriceProduct productTest = new FixPriceProduct("Test");
+        search.add(new SimpleProduct("Вишня", 100));
+        search.add(new SimpleProduct("Черешня", 200));
+        search.add(new FixPriceProduct("Кефир"));
+        search.add(new FixPriceProduct("Хлеб"));
+        search.add(new DiscountedProduct("Картошка", 120, 15));
+        search.add(new DiscountedProduct("Яблоки", 110, 15));
+        search.add(new DiscountedProduct("Колбаса", 240, 25));
 
-        System.out.println("1. Добавление продукта в корзину.");
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
-        basket.addProduct(product4);
-        basket.addProduct(product5);
+        search.add(new Article("Состав салата Оливье.", "Яйца " + "колбаса " + "майонез " + "горошек "));
+        search.add(new Article("Типичный обед студента.", "Кефир " + "Сайка "));
+        search.add(new Article("Рецепт окрошки на кефире", "Кефир " + "Хлеб " + "Колбаса " + "Яйцо "));
+
+        System.out.println("Поиск существующего товара");
         System.out.println();
 
-        System.out.println("2. Добавление продукта в заполненную корзину, в которой нет свободного места.");
-        basket.addProduct(productTest);
-        System.out.println();
+        searchTerm = "хлеб";
+        found = search.search(searchTerm);
+        System.out.println("Поисковый запрос: " + searchTerm);
+        for (Searchable founded : found) {
+            if (founded != null) {
+                System.out.println("ContentType = " + founded.getContentType());
+                System.out.println("StringRepresentation = " + founded.getStringRepresentation());
+            }
+        }
 
-        System.out.println("3. Печать содержимого корзины с несколькими товарами.");
-        basket.printBasket();
-        System.out.println();
+        System.out.println("------------");
 
-        System.out.println("4. Получение стоимости корзины с несколькими товарами.");
-        System.out.println("Итого: " + basket.countTotalPrice());
-        System.out.println();
-
-        System.out.println("5. Поиск товара, который есть в корзине.");
-        basket.findExistence("Хлеб");
-        System.out.println();
-
-        System.out.println("6. Поиск товара, которого нет в корзине.");
-        basket.findExistence("Test");
-        System.out.println();
-
-        System.out.println("7. Очистка корзины.");
-        basket.cleanBasket();
-        System.out.println();
-
-        System.out.println("8. Печать содержимого пустой корзины.");
-        basket.printBasket();
-        System.out.println();
-
-        System.out.println("9. Получение стоимости пустой корзины.");
-        System.out.println("Итого: " + basket.countTotalPrice());
-        System.out.println();
-
-        System.out.println("10. Поиск товара по имени в пустой корзине.");
-        basket.findExistence("Хлеб");
-        System.out.println();
+        searchTerm = "Кефир";
+        found = search.search(searchTerm);
+        System.out.println("Поисковый запрос: " + searchTerm);
+        for (Searchable founded : found) {
+            if (founded != null) {
+//                System.out.println("ContentType = " + founded.getContentType());
+                System.out.println(founded.getStringRepresentation());
+                System.out.println("\n***\n");
+            }
+        }
     }
 }

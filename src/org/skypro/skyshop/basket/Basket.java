@@ -20,7 +20,7 @@ public class Basket {
     // Распечатка содержимого корзины
     public void printBasket() {
         int numberOfSpecialProducts = 0;
-        if (checkIsBasketEmpty() == false) {
+        if (!checkIsBasketEmpty()) {
             System.out.println("Содержимое корзины:");
         }
         for (byte i = 0; i < productBasket.length; i++) {
@@ -76,7 +76,7 @@ public class Basket {
         return check;
     }
 
-        // Очистка корзины
+    // Очистка корзины
     public void cleanBasket() {
         for (byte i = 0; i < productBasket.length; i++) {
             productBasket[i] = null;
