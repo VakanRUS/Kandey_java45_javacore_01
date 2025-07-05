@@ -6,8 +6,14 @@ public class DiscountedProduct extends Product {
 
     public DiscountedProduct(String name, int price, int discount) {
         super(name);
-        productPrice = price;
-        discountPercent = discount;
+
+        if (price <= 0) {
+            throw new IllegalArgumentException("Цена не может быть меньше либо равна 0!");
+        } else productPrice = price;
+
+        if (discount <= 0 || discount >= 100) {
+            throw new IllegalArgumentException("Размер скидки должен быть в пределах от 0 до 100 процентов включительно!");
+        } else discountPercent = discount;
     }
 
     @Override
