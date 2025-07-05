@@ -1,36 +1,38 @@
-
 package org.skypro.skyshop.tools;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
+import org.skypro.skyshop.product.Product;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchEngine {
 
-    private Searchable[] search;
+    private List<Searchable> search;
 
-    public SearchEngine(int size) {
-        search = new Searchable[size];
+    public SearchEngine() {
+        search = new LinkedList<>();
     }
 
-    public void add(Searchable searched) {
-        for (int i = 0; i < search.length; i++) {
-            if (search[i] == null) {
-                search[i] = searched;
-                break;
-            }
-        }
+    public void addSearchable(Searchable searchTerm) {
+        search.add(searchTerm);
     }
 
-    public Searchable[] search(String searchTerm) {
-        Searchable[] found = new Searchable[5];
-        int i = 0;
-        for (Searchable searched : search) {
-            if (i == 5 || searched == null) {
-                break;
-            } else if (searched.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
-                found[i++] = searched;
+    public List<Searchable> search(String searchTerm) {
+        List<Searchable> founded = new LinkedList<>();
+        Iterator<Searchable> iterator = search.iterator();
+        Searchable searchItem;
+        while (iterator.hasNext()) {
+            searchItem = iterator.next();
+            if (searchItem.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
+                founded.add(searchItem);
+                iterator.remove();
             }
         }
-        return found;
+        if (founded.isEmpty()) {
+            System.out.println("Продукт не найден\n" + founded + "\n");
+        }
+        return founded;
     }
 
     public Searchable searchBestResult(String searchTerm) throws BestResultNotFound {
@@ -44,8 +46,8 @@ public class SearchEngine {
             if (found != null) {
                 tempString = found.getSearchTerm().toLowerCase();
                 int counter = 0;
-                int index = 0;
-                int indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), index);
+                int index;
+                int indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), 0);
                 while (indexOfFoundedMatch != -1) {
                     index = indexOfFoundedMatch + searchTerm.length();
                     indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), index);
