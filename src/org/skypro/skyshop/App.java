@@ -10,72 +10,55 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.tools.SearchEngine;
 import org.skypro.skyshop.tools.Searchable;
 
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.List;
+
 public class App {
     public static void main(String[] args) throws BestResultNotFound {
-        Searchable[] found;
-        SearchEngine search = new SearchEngine(10);
-        String searchTerm;
 
         Basket basket = new Basket();
+        SearchEngine search = new SearchEngine();
 
-        try {
-            SimpleProduct Product1 = new SimpleProduct("Вишня", 0);
-            basket.addProduct(Product1);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-            System.out.println("Продукт не добавлен в корзину\n");
-        }
+        SimpleProduct product1 = new SimpleProduct("Вишня", 100);
+//        FixPriceProduct product2 = null; // ради проверки работы кода добавил пустой продукт в корзину
+        DiscountedProduct product3 = new DiscountedProduct("Картошка", 60, 15);
+        FixPriceProduct product4 = new FixPriceProduct("Молоко");
+        DiscountedProduct product5 = new DiscountedProduct("Хлеб \"Бородинский\"", 40, 15);
+        SimpleProduct product6 = new SimpleProduct("Сок \"Мультифрукт\"", 240);
+        DiscountedProduct product7 = new DiscountedProduct("Масло", 200, 30);
+        FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Сендвичный\"");
 
-        try {
-            FixPriceProduct Product2 = new FixPriceProduct("");
-            basket.addProduct(Product2);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-            System.out.println("Продукт не добавлен в корзину\n");
-        }
+        basket.addProduct(product1);
+        basket.addProduct(null);
+        basket.addProduct(product3);
+        basket.addProduct(product4);
+        basket.addProduct(product5);
+        basket.addProduct(product6);
+        basket.addProduct(product7);
+        basket.addProduct(product8);
 
-        try {
-            DiscountedProduct Product3 = new DiscountedProduct("Картошка", 120, 115);
-            basket.addProduct(Product3);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-            System.out.println("Продукт не добавлен в корзину\n");
-        }
-        System.out.println("----\n");
+        search.addSearchable(product8);
+        search.addSearchable(product7);
+        search.addSearchable(product5);
 
-        search.add(new SimpleProduct("Вишня", 100));
-        search.add(new SimpleProduct("Черешня", 200));
-        search.add(new FixPriceProduct("Кефир"));
-        search.add(new FixPriceProduct("Хлеб"));
-        search.add(new DiscountedProduct("Картошка", 120, 15));
-        search.add(new DiscountedProduct("Яблоки", 110, 15));
-        search.add(new DiscountedProduct("Колбаса", 240, 25));
+        System.out.println("\n***\n");
 
-        search.add(new Article("Кефира побольше!", "Кефир " + "Колбаса " + "Кефир " + "Батон " + "Кефир "));
-        search.add(new Article("Типичный обед студента.", "Кефир " + "Сайка "));
-        search.add(new Article("Рецепт окрошки на кефире.", "Кефир " + "Хлеб " + "Колбаса " + "Яйцо "));
+        basket.printBasket();
 
-        searchTerm = "Кефир";
-        found = search.search(searchTerm);
-        System.out.println("Поисковый запрос: " + searchTerm);
-        for (Searchable founded : found) {
-            if (founded != null) {
-                System.out.println("ContentType = " + founded.getContentType());
-                System.out.println("StringRepresentation = " + founded.getStringRepresentation());
-            }
-        }
+        System.out.println("\n***\n");
 
-        searchTerm = "Кефир";
-        System.out.println(search.searchBestResult(searchTerm));
+        System.out.println(basket.findExistence("Хлеб"));
+        System.out.println(basket.findExistence("Test"));
 
-        System.out.println("----------");
+        System.out.println("\n***\n");
 
-        searchTerm = "Самолёт";
-        try {
-            System.out.println(search.searchBestResult(searchTerm));
-        } catch (BestResultNotFound e) {
-            System.out.println(e.toString());
-        }
+        System.out.println(basket.deleteItem("хлеб"));
+        System.out.println(basket.deleteItem("хлеб"));
 
+        System.out.println("\n***\n");
+
+        System.out.println(search.search("Хлеб"));
+        System.out.println(search.search("Test"));
     }
 }

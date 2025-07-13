@@ -1,37 +1,43 @@
 package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.tools.Searchable;
+
+import java.util.*;
 
 public class Basket {
-    private Product[] productBasket = new Product[5];
+    private Map<Product, List<Product>> productBasket;
+
+    public Basket() {
+        this.productBasket = new HashMap<>();
+    }
 
     // Добавление товара в корзину
     public void addProduct(Product product) {
-        for (byte i = 0; i < productBasket.length; i++) {
-            if (productBasket[i] == null) {
-                productBasket[i] = product;
-                System.out.println("Добавлен продукт: " + product.getName());
-                return;
-            }
+        if (product != null) {
+            System.out.println("Добавлен продукт: " + product.getName());
+        } else {
+            System.out.println("Добавлен пустой продукт");
         }
-        System.out.println("Невозможно добавить продукт");
+        productBasket.computeIfAbsent(product, k -> new ArrayList<>()).add(product);
     }
 
     // Распечатка содержимого корзины
     public void printBasket() {
         int numberOfSpecialProducts = 0;
-        if (!checkIsBasketEmpty()) {
+        if (!productBasket.isEmpty()) {
             System.out.println("Содержимое корзины:");
         }
-        for (byte i = 0; i < productBasket.length; i++) {
-            if (productBasket[i] != null) {
-                System.out.println(productBasket[i].toString());
+        for (Map.Entry<Product, List<Product>> product : productBasket.entrySet()) {
+            Product key = product.getKey();
+            if (key != null) {
+                System.out.println(key);
             }
-            if (productBasket[i] != null && productBasket[i].isSpecial()) {
+            if (key != null && key.isSpecial()) {
                 numberOfSpecialProducts++;
             }
         }
-        if (checkIsBasketEmpty()) {
+        if (productBasket.isEmpty()) {
             System.out.println("Корзина пуста");
         } else {
             System.out.println("Итого: " + countTotalPrice());
@@ -42,9 +48,11 @@ public class Basket {
     // Расчет полной стоимости корзины
     public int countTotalPrice() {
         int totalPrice = 0;
-        for (byte i = 0; i < productBasket.length; i++) {
-            if (productBasket[i] != null) {
-                totalPrice += productBasket[i].getPrice();
+        for (Map.Entry<Product, List<Product>> entry : productBasket.entrySet()) {
+            Product key = entry.getKey();
+            if (key != null) {
+                int quantity = entry.getValue() == null ? 0 : entry.getValue().size();
+                totalPrice += key.getPrice() * quantity;
             }
         }
         return totalPrice;
@@ -52,35 +60,26 @@ public class Basket {
 
     // Проверка наличия
     public boolean findExistence(String name) {
-        boolean check = false;
-        for (byte i = 0; i < productBasket.length; i++) {
-            if (productBasket[i] != null && productBasket[i].getName().equals(name)) {
-                check = true;
-                System.out.println("Поиск: " + name + " - товар уже добавлен в корзину");
-                return check;
+        for (Map.Entry<Product, List<Product>> entry : productBasket.entrySet()) {
+            Product key = entry.getKey();
+            if (key != null && key.getName().toLowerCase().contains(name.toLowerCase())) {
+                return true;
             }
         }
-        System.out.println("Поиск: " + name + " - товар в корзине не найден");
-        return check;
+        return false;
     }
 
-    // проверка заполненности корзины
-    public boolean checkIsBasketEmpty() {
-        boolean check = true;
-        for (byte i = 0; i < productBasket.length; i++) {
-            if (productBasket[i] != null) {
-                check = false;
-                break;
+    // Удаление позиции по получаемому имени продукта
+    public List<Searchable> deleteItem(String searchTerm) {
+        List<Searchable> founded = new LinkedList<>();
+        Iterator<Map.Entry<Product, List<Product>>> iterator = productBasket.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Product search = iterator.next().getKey();
+            if (search != null && search.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
+                founded.add(search);
+                iterator.remove();
             }
         }
-        return check;
-    }
-
-    // Очистка корзины
-    public void cleanBasket() {
-        for (byte i = 0; i < productBasket.length; i++) {
-            productBasket[i] = null;
-        }
-        System.out.println("Корзина очищена");
+        return founded;
     }
 }
