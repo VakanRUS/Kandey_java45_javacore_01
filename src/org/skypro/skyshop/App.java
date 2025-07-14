@@ -21,7 +21,7 @@ public class App {
         SearchEngine search = new SearchEngine();
 
         SimpleProduct product1 = new SimpleProduct("Вишня", 100);
-//        FixPriceProduct product2 = null; // ради проверки работы кода добавил пустой продукт в корзину
+        FixPriceProduct product2 = new FixPriceProduct("Яблоки");
         DiscountedProduct product3 = new DiscountedProduct("Картошка", 60, 15);
         FixPriceProduct product4 = new FixPriceProduct("Молоко");
         DiscountedProduct product5 = new DiscountedProduct("Хлеб \"Бородинский\"", 40, 15);
@@ -30,7 +30,7 @@ public class App {
         FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Сендвичный\"");
 
         basket.addProduct(product1);
-        basket.addProduct(null);
+        basket.addProduct(product2);
         basket.addProduct(product3);
         basket.addProduct(product4);
         basket.addProduct(product5);
@@ -48,17 +48,18 @@ public class App {
 
         System.out.println("\n***\n");
 
-        System.out.println(basket.findExistence("Хлеб"));
-        System.out.println(basket.findExistence("Test"));
+        basket.findExistence("Соль");
+        basket.findExistence("Test");
 
         System.out.println("\n***\n");
 
-        System.out.println(basket.deleteItem("хлеб"));
-        System.out.println(basket.deleteItem("хлеб"));
+        basket.deleteItem("хлеб");
+        basket.deleteItem("хлеб");
+
+        basket.printBasket();
 
         System.out.println("\n***\n");
 
         System.out.println(search.search("Хлеб"));
-        System.out.println(search.search("Test"));
     }
 }

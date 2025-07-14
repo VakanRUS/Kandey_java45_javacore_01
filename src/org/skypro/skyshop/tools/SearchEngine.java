@@ -2,8 +2,9 @@ package org.skypro.skyshop.tools;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
-
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchEngine {
 
@@ -17,17 +18,21 @@ public class SearchEngine {
         search.add(searchTerm);
     }
 
-    public Map<String, Searchable> search(String searchTerm) {
-        Map<String, Searchable> foundElements = new TreeMap<>();
+    public List<Searchable> search(String searchTerm) {
+        List<Searchable> founded = new LinkedList<>();
         Iterator<Searchable> iterator = search.iterator();
         Searchable searchItem;
         while (iterator.hasNext()) {
             searchItem = iterator.next();
             if (searchItem.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
-                foundElements.put(searchItem.getSearchTerm(), searchItem);
+                founded.add(searchItem);
+                iterator.remove();
             }
         }
-        return foundElements;
+        if (founded.isEmpty()) {
+            System.out.println("Продукт не найден\n" + founded + "\n");
+        }
+        return founded;
     }
 
     public Searchable searchBestResult(String searchTerm) throws BestResultNotFound {
