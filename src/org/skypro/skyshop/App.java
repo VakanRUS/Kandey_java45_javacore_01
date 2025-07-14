@@ -17,14 +17,25 @@ public class App {
         String searchTerm;
 
         Basket basket = new Basket();
+        SearchEngine search = new SearchEngine();
 
-        try {
-            SimpleProduct Product1 = new SimpleProduct("Вишня", 0);
-            basket.addProduct(Product1);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-            System.out.println("Продукт не добавлен в корзину\n");
-        }
+        SimpleProduct product1 = new SimpleProduct("Вишня", 100);
+        FixPriceProduct product2 = new FixPriceProduct("Яблоки");
+        DiscountedProduct product3 = new DiscountedProduct("Картошка", 60, 15);
+        FixPriceProduct product4 = new FixPriceProduct("Молоко");
+        DiscountedProduct product5 = new DiscountedProduct("Хлеб \"Бородинский\"", 40, 15);
+        SimpleProduct product6 = new SimpleProduct("Сок \"Мультифрукт\"", 240);
+        DiscountedProduct product7 = new DiscountedProduct("Масло", 200, 30);
+        FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Сендвичный\"");
+
+        basket.addProduct(product1);
+        basket.addProduct(product2);
+        basket.addProduct(product3);
+        basket.addProduct(product4);
+        basket.addProduct(product5);
+        basket.addProduct(product6);
+        basket.addProduct(product7);
+        basket.addProduct(product8);
 
         try {
             FixPriceProduct Product2 = new FixPriceProduct("");
@@ -55,27 +66,19 @@ public class App {
         search.add(new Article("Типичный обед студента.", "Кефир " + "Сайка "));
         search.add(new Article("Рецепт окрошки на кефире.", "Кефир " + "Хлеб " + "Колбаса " + "Яйцо "));
 
-        searchTerm = "Кефир";
-        found = search.search(searchTerm);
-        System.out.println("Поисковый запрос: " + searchTerm);
-        for (Searchable founded : found) {
-            if (founded != null) {
-                System.out.println("ContentType = " + founded.getContentType());
-                System.out.println("StringRepresentation = " + founded.getStringRepresentation());
-            }
-        }
+        basket.findExistence("Соль");
+        basket.findExistence("Test");
 
         searchTerm = "Кефир";
         System.out.println(search.searchBestResult(searchTerm));
 
+        basket.deleteItem("хлеб");
+        basket.deleteItem("хлеб");
+
+        basket.printBasket();
+
         System.out.println("----------");
 
-        searchTerm = "Самолёт";
-        try {
-            System.out.println(search.searchBestResult(searchTerm));
-        } catch (BestResultNotFound e) {
-            System.out.println(e.toString());
-        }
-
+        System.out.println(search.search("Хлеб"));
     }
 }
