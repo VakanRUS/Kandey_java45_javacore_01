@@ -1,3 +1,4 @@
+
 package org.skypro.skyshop.tools;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
@@ -8,14 +9,19 @@ import java.util.List;
 
 public class SearchEngine {
 
-    private List<Searchable> search;
+    private Searchable[] search;
 
-    public SearchEngine() {
-        search = new LinkedList<>();
+    public SearchEngine(int size) {
+        search = new Searchable[size];
     }
 
-    public void addSearchable(Searchable searchTerm) {
-        search.add(searchTerm);
+    public void add(Searchable searched) {
+        for (int i = 0; i < search.length; i++) {
+            if (search[i] == null) {
+                search[i] = searched;
+                break;
+            }
+        }
     }
 
     public List<Searchable> search(String searchTerm) {
@@ -46,8 +52,8 @@ public class SearchEngine {
             if (found != null) {
                 tempString = found.getSearchTerm().toLowerCase();
                 int counter = 0;
-                int index;
-                int indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), 0);
+                int index = 0;
+                int indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), index);
                 while (indexOfFoundedMatch != -1) {
                     index = indexOfFoundedMatch + searchTerm.length();
                     indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), index);

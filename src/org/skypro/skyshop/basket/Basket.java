@@ -15,12 +15,13 @@ public class Basket {
     public void addProduct(Product product) {
         productBasket.add(product);
         System.out.println("Добавлен продукт: " + product.getName());
+
     }
 
     // Распечатка содержимого корзины
     public void printBasket() {
         int numberOfSpecialProducts = 0;
-        if (!productBasket.isEmpty()) {
+        if (!checkIsBasketEmpty()) {
             System.out.println("Содержимое корзины:");
         }
         for (Product products : productBasket) {
@@ -31,7 +32,7 @@ public class Basket {
                 numberOfSpecialProducts++;
             }
         }
-        if (productBasket.isEmpty()) {
+        if (checkIsBasketEmpty()) {
             System.out.println("Корзина пуста");
         } else {
             System.out.println("Итого: " + countTotalPrice());
@@ -44,6 +45,7 @@ public class Basket {
         int totalPrice = 0;
         for (Product products : productBasket) {
             totalPrice += products.getPrice();
+
         }
         return totalPrice;
     }
