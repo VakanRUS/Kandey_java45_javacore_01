@@ -17,7 +17,6 @@ public class App {
         String searchTerm;
 
         Basket basket = new Basket();
-        SearchEngine search = new SearchEngine();
 
         SimpleProduct product1 = new SimpleProduct("Вишня", 100);
         FixPriceProduct product2 = new FixPriceProduct("Яблоки");
