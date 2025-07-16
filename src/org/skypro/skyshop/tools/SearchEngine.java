@@ -3,26 +3,23 @@ package org.skypro.skyshop.tools;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class SearchEngine {
 
-    private Searchable[] search;
+    private List<Searchable> search;
 
     public SearchEngine(int size) {
-        search = new Searchable[size];
+        search = new ArrayList<>();
     }
 
     public void add(Searchable searched) {
-        for (int i = 0; i < search.length; i++) {
-            if (search[i] == null) {
-                search[i] = searched;
-                break;
-            }
+        search.add(searched);
         }
-    }
 
     public List<Searchable> search(String searchTerm) {
         List<Searchable> founded = new LinkedList<>();

@@ -21,7 +21,7 @@ public class Basket {
     // Распечатка содержимого корзины
     public void printBasket() {
         int numberOfSpecialProducts = 0;
-        if (!checkIsBasketEmpty()) {
+        if (!productBasket.isEmpty()) {
             System.out.println("Содержимое корзины:");
         }
         for (Product products : productBasket) {
@@ -32,7 +32,7 @@ public class Basket {
                 numberOfSpecialProducts++;
             }
         }
-        if (checkIsBasketEmpty()) {
+        if (productBasket.isEmpty()) {
             System.out.println("Корзина пуста");
         } else {
             System.out.println("Итого: " + countTotalPrice());
