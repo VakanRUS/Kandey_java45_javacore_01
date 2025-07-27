@@ -30,4 +30,20 @@ public class DiscountedProduct extends Product {
     public String toString() {
         return getName() + ": " + getPrice() + " (скидка -" + discountPercent + "%)";
     }
+
+    public int getDiscountPercent() {
+        return discountPercent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        DiscountedProduct that = (DiscountedProduct) o;
+        return getName().equals(that.getName()) && productPrice == that.productPrice && getDiscountPercent() == that.getDiscountPercent();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), productPrice, getDiscountPercent());
+    }
 }

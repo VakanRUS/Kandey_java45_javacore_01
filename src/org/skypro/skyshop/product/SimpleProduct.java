@@ -25,4 +25,16 @@ public class SimpleProduct extends Product {
     public String toString() {
         return getName() + ": " + simplePrice;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleProduct that = (SimpleProduct) o;
+        return getName().equals(that.getName()) && getPrice() == that.getPrice();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getPrice());
+    }
 }
