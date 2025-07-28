@@ -23,7 +23,7 @@ public class App {
         DiscountedProduct product5 = new DiscountedProduct("Хлеб \"Бородинский\"", 40, 15);
         SimpleProduct product6 = new SimpleProduct("Сок \"Мультифрукт\"", 240);
         DiscountedProduct product7 = new DiscountedProduct("Масло", 200, 30);
-        FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Сендвичный\"");
+        FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Белый\"");
 
         basket.addProduct(product1);
         basket.addProduct(null);
