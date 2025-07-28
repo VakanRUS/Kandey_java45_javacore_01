@@ -18,17 +18,18 @@ public class SearchEngine {
     }
 
     public Set<Searchable> search(String searchTerm) {
-        Set<Searchable> foundElements = new TreeSet<>(new Comparator());
         if (searchTerm == null) {
             System.out.println("Отправлен пустой запрос, поиск невозможен");
+            return null;
         } else {
+            Set<Searchable> foundElements = new TreeSet<>(new Comparator());
             for (Searchable searchableElement : search) {
                 if (searchableElement != null && searchableElement.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
                     foundElements.add(searchableElement);
                 }
             }
+            return foundElements;
         }
-        return foundElements;
     }
 
     public Searchable searchBestResult(String searchTerm) throws BestResultNotFound {
