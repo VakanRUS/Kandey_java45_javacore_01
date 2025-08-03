@@ -20,7 +20,7 @@ public class SearchEngine {
     public Set<Searchable> search(String searchTerm) {
         if (searchTerm == null) {
             System.out.println("Отправлен пустой запрос, поиск невозможен");
-            return null;
+            return Set.of();
         } else {
             Set<Searchable> foundElements = new TreeSet<>(new Comparator());
             for (Searchable searchableElement : search) {
