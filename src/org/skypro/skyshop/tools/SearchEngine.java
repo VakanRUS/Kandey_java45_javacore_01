@@ -1,9 +1,13 @@
+
 package org.skypro.skyshop.tools;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchEngine {
 
@@ -11,11 +15,12 @@ public class SearchEngine {
 
     public SearchEngine() {
         search = new HashSet<>();
+
     }
 
-    public void addSearchable(Searchable searchTerm) {
-        search.add(searchTerm);
-    }
+    public void add(Searchable searched) {
+        search.add(searched);
+        }
 
     public Set<Searchable> search(String searchTerm) {
         if (searchTerm == null) {
@@ -27,6 +32,7 @@ public class SearchEngine {
                 if (searchableElement != null && searchableElement.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
                     foundElements.add(searchableElement);
                 }
+
             }
             return foundElements;
         }
@@ -43,8 +49,8 @@ public class SearchEngine {
             if (found != null) {
                 tempString = found.getSearchTerm().toLowerCase();
                 int counter = 0;
-                int index;
-                int indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), 0);
+                int index = 0;
+                int indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), index);
                 while (indexOfFoundedMatch != -1) {
                     index = indexOfFoundedMatch + searchTerm.length();
                     indexOfFoundedMatch = tempString.indexOf(searchTerm.toLowerCase(), index);
