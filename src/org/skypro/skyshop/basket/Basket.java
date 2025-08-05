@@ -14,68 +14,56 @@ public class Basket {
 
     // Добавление товара в корзину
     public void addProduct(Product product) {
-        if (product != null) {
-            System.out.println("Добавлен продукт: " + product.getName());
-        } else {
-            System.out.println("Добавлен пустой продукт");
-        }
         productBasket.computeIfAbsent(product, k -> new ArrayList<>()).add(product);
+        System.out.println("Добавлен продукт: " + product.getName());
     }
 
     // Распечатка содержимого корзины
     public void printBasket() {
-        int numberOfSpecialProducts = 0;
         if (!productBasket.isEmpty()) {
             System.out.println("Содержимое корзины:");
         }
-        for (Map.Entry<Product, List<Product>> product : productBasket.entrySet()) {
-            Product key = product.getKey();
-            if (key != null) {
-                System.out.println(key);
-            }
-            if (key != null && key.isSpecial()) {
-                numberOfSpecialProducts++;
-            }
-        }
+        productBasket.values().stream()
+                .flatMap(products -> products.stream())
+                .forEach(System.out::println);
         if (productBasket.isEmpty()) {
             System.out.println("Корзина пуста");
         } else {
             System.out.println("Итого: " + countTotalPrice());
-            System.out.println("Специальных товаров: " + numberOfSpecialProducts);
+            System.out.println("Специальных товаров: " + getNumberOfSpecialProducts());
         }
+    }
+
+    // Вычисление количества особых продуктов
+    private int getNumberOfSpecialProducts() {
+        return (int) productBasket.values().stream()
+                .flatMap(products -> products.stream())
+                .filter(Product::isSpecial)
+                .count();
     }
 
     // Расчет полной стоимости корзины
     public int countTotalPrice() {
-        int totalPrice = 0;
-        for (Map.Entry<Product, List<Product>> entry : productBasket.entrySet()) {
-            Product key = entry.getKey();
-            if (key != null) {
-                int quantity = entry.getValue() == null ? 0 : entry.getValue().size();
-                totalPrice += key.getPrice() * quantity;
-            }
-        }
-        return totalPrice;
+        return productBasket.values().stream()
+                .flatMap(products -> products.stream())
+                .mapToInt(Product::getPrice)
+                .sum();
     }
 
     // Проверка наличия
     public boolean findExistence(String name) {
-        for (Map.Entry<Product, List<Product>> entry : productBasket.entrySet()) {
-            Product key = entry.getKey();
-            if (key != null && key.getName().toLowerCase().contains(name.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return productBasket.values().stream()
+                .flatMap(products -> products.stream())
+                .anyMatch(product -> product.getName().equals(name));
     }
 
     // Удаление позиции по получаемому имени продукта
-    public List<Searchable> deleteItem(String searchTerm) {
-        List<Searchable> founded = new LinkedList<>();
+    public List<Product> deleteItem(String searchTerm) {
+        List<Product> founded = new LinkedList<>();
         Iterator<Map.Entry<Product, List<Product>>> iterator = productBasket.entrySet().iterator();
         while (iterator.hasNext()) {
             Product search = iterator.next().getKey();
-            if (search != null && search.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
+            if (search != null && search.getSearchTerm().equalsIgnoreCase(searchTerm)) {
                 founded.add(search);
                 iterator.remove();
             }

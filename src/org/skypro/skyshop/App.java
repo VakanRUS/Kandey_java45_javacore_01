@@ -53,31 +53,32 @@ public class App {
         }
         System.out.println("----\n");
 
-        search.add(new SimpleProduct("Вишня", 100));
-        search.add(new SimpleProduct("Черешня", 200));
-        search.add(new FixPriceProduct("Кефир"));
-        search.add(new FixPriceProduct("Хлеб"));
-        search.add(new DiscountedProduct("Картошка", 120, 15));
-        search.add(new DiscountedProduct("Яблоки", 110, 15));
-        search.add(new DiscountedProduct("Колбаса", 240, 25));
+        search.add(product1);
+        search.add(product2);
+        search.add(product3);
+        search.add(product4);
+        search.add(product5);
+        search.add(product6);
+        search.add(product7);
+        search.add(product8);
 
         search.add(new Article("Кефира побольше!", "Кефир " + "Колбаса " + "Кефир " + "Батон " + "Кефир "));
         search.add(new Article("Типичный обед студента.", "Кефир " + "Сайка "));
         search.add(new Article("Рецепт окрошки на кефире.", "Кефир " + "Хлеб " + "Колбаса " + "Яйцо "));
 
-        basket.findExistence("Соль");
-        basket.findExistence("Test");
+        System.out.println("basket.findExistence(\"Хлеб \"Бородинский\"\") = " + basket.findExistence("Хлеб \"Бородинский\""));
+        System.out.println("basket.findExistence(\"Test\") = " + basket.findExistence("Test"));
+
+        System.out.println();
 
         searchTerm = "Кефир";
-        System.out.println(search.searchBestResult(searchTerm));
+        System.out.println("search.searchBestResult(searchTerm) = " + search.searchBestResult(searchTerm));
 
-        basket.deleteItem("хлеб");
-        basket.deleteItem("хлеб");
+        System.out.println();
 
+        System.out.println("basket.deleteItem(\"Хлеб \"Сендвичный\"\") = " + basket.deleteItem("Хлеб \"Сендвичный\""));
+        System.out.println("basket.deleteItem(\"Хлеб \") = " + basket.deleteItem("Хлеб"));
+        System.out.println();
         basket.printBasket();
-
-        System.out.println("----------");
-
-        System.out.println(search.search("Хлеб"));
     }
 }

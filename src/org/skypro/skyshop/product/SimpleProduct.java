@@ -1,5 +1,7 @@
 package org.skypro.skyshop.product;
 
+import java.util.Objects;
+
 public class SimpleProduct extends Product {
     private final int simplePrice;
 

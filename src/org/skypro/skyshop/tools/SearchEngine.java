@@ -2,40 +2,27 @@
 package org.skypro.skyshop.tools;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
-import org.skypro.skyshop.product.Product;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
 
-    private List<Searchable> search;
+    private Set<Searchable> searchTerms;
 
     public SearchEngine(int size) {
-        search = new ArrayList<>();
+        searchTerms = new HashSet<>();
     }
 
     public void add(Searchable searched) {
-        search.add(searched);
-        }
+        searchTerms.add(searched);
+    }
 
-    public List<Searchable> search(String searchTerm) {
-        List<Searchable> founded = new LinkedList<>();
-        Iterator<Searchable> iterator = search.iterator();
-        Searchable searchItem;
-        while (iterator.hasNext()) {
-            searchItem = iterator.next();
-            if (searchItem.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
-                founded.add(searchItem);
-                iterator.remove();
-            }
-        }
-        if (founded.isEmpty()) {
-            System.out.println("Продукт не найден\n" + founded + "\n");
-        }
-        return founded;
+    public Set<Searchable> search(String searchTerm) {
+        return searchTerms.stream()
+                .filter(Objects::nonNull)
+                .filter(searchElement -> searchElement.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase()))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new org.skypro.skyshop.tools.MyComparator())));
     }
 
     public Searchable searchBestResult(String searchTerm) throws BestResultNotFound {
@@ -44,7 +31,7 @@ public class SearchEngine {
         Searchable bestResult = null;
         String tempString;
 
-        for (Searchable found : search) {
+        for (Searchable found : searchTerms) {
 
             if (found != null) {
                 tempString = found.getSearchTerm().toLowerCase();
