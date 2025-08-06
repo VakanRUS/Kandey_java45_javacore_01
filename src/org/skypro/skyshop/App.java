@@ -10,6 +10,9 @@ import org.skypro.skyshop.tools.SearchEngine;
 import org.skypro.skyshop.tools.Searchable;
 
 public class App {
+    public static SearchEngine search = new SearchEngine();
+    public static Basket basket = new Basket();
+
     public static void main(String[] args) throws BestResultNotFound {
         Searchable[] found;
         SearchEngine search = new SearchEngine(10);
@@ -18,13 +21,13 @@ public class App {
         ProductBasket productBasket = new ProductBasket();
 
         SimpleProduct product1 = new SimpleProduct("Вишня", 100);
-        FixPriceProduct product2 = new FixPriceProduct("Яблоки");
+
         DiscountedProduct product3 = new DiscountedProduct("Картошка", 60, 15);
         FixPriceProduct product4 = new FixPriceProduct("Молоко");
         DiscountedProduct product5 = new DiscountedProduct("Хлеб \"Бородинский\"", 40, 15);
         SimpleProduct product6 = new SimpleProduct("Сок \"Мультифрукт\"", 240);
         DiscountedProduct product7 = new DiscountedProduct("Масло", 200, 30);
-        FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Сендвичный\"");
+        FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Белый\"");
 
         productBasket.addProduct(product1);
         productBasket.addProduct(product2);
@@ -79,5 +82,6 @@ public class App {
         System.out.println("basket.deleteItem(\"Хлеб \") = " + productBasket.deleteItem("Хлеб"));
         System.out.println();
         productBasket.printBasket();
+
     }
 }

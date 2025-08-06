@@ -56,4 +56,11 @@ public class SearchEngine {
             return bestResult;
         }
     }
+
+    @Override
+    public String toString() {
+        return "SearchEngine{" +
+                "searchableElements=" + search +
+                '}';
+    }
 }
