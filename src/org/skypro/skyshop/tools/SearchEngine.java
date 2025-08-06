@@ -11,31 +11,31 @@ import java.util.List;
 
 public class SearchEngine {
 
-    private List<Searchable> search;
+    private Set<Searchable> search;
 
-    public SearchEngine(int size) {
-        search = new ArrayList<>();
+    public SearchEngine() {
+        search = new HashSet<>();
+
     }
 
     public void add(Searchable searched) {
         search.add(searched);
         }
 
-    public List<Searchable> search(String searchTerm) {
-        List<Searchable> founded = new LinkedList<>();
-        Iterator<Searchable> iterator = search.iterator();
-        Searchable searchItem;
-        while (iterator.hasNext()) {
-            searchItem = iterator.next();
-            if (searchItem.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
-                founded.add(searchItem);
-                iterator.remove();
+    public Set<Searchable> search(String searchTerm) {
+        if (searchTerm == null) {
+            System.out.println("Отправлен пустой запрос, поиск невозможен");
+            return Set.of();
+        } else {
+            Set<Searchable> foundElements = new TreeSet<>(new Comparator());
+            for (Searchable searchableElement : search) {
+                if (searchableElement != null && searchableElement.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    foundElements.add(searchableElement);
+                }
+
             }
+            return foundElements;
         }
-        if (founded.isEmpty()) {
-            System.out.println("Продукт не найден\n" + founded + "\n");
-        }
-        return founded;
     }
 
     public Searchable searchBestResult(String searchTerm) throws BestResultNotFound {
@@ -68,5 +68,12 @@ public class SearchEngine {
         } else {
             return bestResult;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "SearchEngine{" +
+                "searchableElements=" + search +
+                '}';
     }
 }
