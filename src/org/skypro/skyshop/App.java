@@ -1,14 +1,13 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
-import org.skypro.skyshop.article.Article;
-import org.skypro.skyshop.basket.Basket;
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.product.SimpleProduct;
-import org.skypro.skyshop.tools.SearchEngine;
-import org.skypro.skyshop.tools.Searchable;
+import org.skypro.skyshop.Article.Article;
+import org.skypro.skyshop.ProductBasket.ProductBasket;
+import org.skypro.skyshop.Product.DiscountedProduct;
+import org.skypro.skyshop.Product.FixPriceProduct;
+import org.skypro.skyshop.Product.SimpleProduct;
+import org.skypro.skyshop.Tools.SearchEngine;
+import org.skypro.skyshop.Tools.Searchable;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFound {
@@ -16,7 +15,7 @@ public class App {
         SearchEngine search = new SearchEngine(10);
         String searchTerm;
 
-        Basket basket = new Basket();
+        ProductBasket productBasket = new ProductBasket();
 
         SimpleProduct product1 = new SimpleProduct("Вишня", 100);
         FixPriceProduct product2 = new FixPriceProduct("Яблоки");
@@ -27,18 +26,18 @@ public class App {
         DiscountedProduct product7 = new DiscountedProduct("Масло", 200, 30);
         FixPriceProduct product8 = new FixPriceProduct("Хлеб \"Сендвичный\"");
 
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
-        basket.addProduct(product4);
-        basket.addProduct(product5);
-        basket.addProduct(product6);
-        basket.addProduct(product7);
-        basket.addProduct(product8);
+        productBasket.addProduct(product1);
+        productBasket.addProduct(product2);
+        productBasket.addProduct(product3);
+        productBasket.addProduct(product4);
+        productBasket.addProduct(product5);
+        productBasket.addProduct(product6);
+        productBasket.addProduct(product7);
+        productBasket.addProduct(product8);
 
         try {
             FixPriceProduct Product2 = new FixPriceProduct("");
-            basket.addProduct(Product2);
+            productBasket.addProduct(Product2);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
             System.out.println("Продукт не добавлен в корзину\n");
@@ -46,7 +45,7 @@ public class App {
 
         try {
             DiscountedProduct Product3 = new DiscountedProduct("Картошка", 120, 115);
-            basket.addProduct(Product3);
+            productBasket.addProduct(Product3);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
             System.out.println("Продукт не добавлен в корзину\n");
@@ -66,8 +65,8 @@ public class App {
         search.add(new Article("Типичный обед студента.", "Кефир " + "Сайка "));
         search.add(new Article("Рецепт окрошки на кефире.", "Кефир " + "Хлеб " + "Колбаса " + "Яйцо "));
 
-        System.out.println("basket.findExistence(\"Хлеб \"Бородинский\"\") = " + basket.findExistence("Хлеб \"Бородинский\""));
-        System.out.println("basket.findExistence(\"Test\") = " + basket.findExistence("Test"));
+        System.out.println("basket.findExistence(\"Хлеб \"Бородинский\"\") = " + productBasket.findExistence("Хлеб \"Бородинский\""));
+        System.out.println("basket.findExistence(\"Test\") = " + productBasket.findExistence("Test"));
 
         System.out.println();
 
@@ -76,9 +75,9 @@ public class App {
 
         System.out.println();
 
-        System.out.println("basket.deleteItem(\"Хлеб \"Сендвичный\"\") = " + basket.deleteItem("Хлеб \"Сендвичный\""));
-        System.out.println("basket.deleteItem(\"Хлеб \") = " + basket.deleteItem("Хлеб"));
+        System.out.println("basket.deleteItem(\"Хлеб \"Сендвичный\"\") = " + productBasket.deleteItem("Хлеб \"Сендвичный\""));
+        System.out.println("basket.deleteItem(\"Хлеб \") = " + productBasket.deleteItem("Хлеб"));
         System.out.println();
-        basket.printBasket();
+        productBasket.printBasket();
     }
 }

@@ -1,14 +1,13 @@
-package org.skypro.skyshop.basket;
+package org.skypro.skyshop.ProductBasket;
 
-import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.tools.Searchable;
+import org.skypro.skyshop.Product.Product;
 
 import java.util.*;
 
-public class Basket {
+public class ProductBasket {
     private Map<Product, List<Product>> productBasket;
 
-    public Basket() {
+    public ProductBasket() {
         this.productBasket = new HashMap<>();
     }
 

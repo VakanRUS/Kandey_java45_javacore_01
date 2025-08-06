@@ -1,4 +1,4 @@
-package org.skypro.skyshop.tools;
+package org.skypro.skyshop.Tools;
 
 public interface Searchable {
     String getSearchTerm();

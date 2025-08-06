@@ -1,4 +1,4 @@
-package org.skypro.skyshop.tools;
+package org.skypro.skyshop.Tools;
 
 import java.util.Comparator;
 

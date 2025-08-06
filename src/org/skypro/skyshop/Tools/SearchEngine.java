@@ -1,5 +1,5 @@
 
-package org.skypro.skyshop.tools;
+package org.skypro.skyshop.Tools;
 
 import org.skypro.skyshop.Exceptions.BestResultNotFound;
 
@@ -22,7 +22,7 @@ public class SearchEngine {
         return searchTerms.stream()
                 .filter(Objects::nonNull)
                 .filter(searchElement -> searchElement.getSearchTerm().toLowerCase().contains(searchTerm.toLowerCase()))
-                .collect(Collectors.toCollection(() -> new TreeSet<>(new org.skypro.skyshop.tools.MyComparator())));
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new org.skypro.skyshop.Tools.MyComparator())));
     }
 
     public Searchable searchBestResult(String searchTerm) throws BestResultNotFound {
