@@ -1,4 +1,4 @@
-package org.skypro.skyshop.Product;
+package org.skypro.skyshop.product;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
-package org.skypro.skyshop.ProductBasket;
+package org.skypro.skyshop.productBasket;
 
-import org.skypro.skyshop.Product.Product;
+import org.skypro.skyshop.product.Product;
 
 import java.util.*;
 

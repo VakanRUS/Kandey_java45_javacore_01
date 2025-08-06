@@ -1,13 +1,13 @@
 package org.skypro.skyshop;
 
-import org.skypro.skyshop.Exceptions.BestResultNotFound;
-import org.skypro.skyshop.Article.Article;
-import org.skypro.skyshop.ProductBasket.ProductBasket;
-import org.skypro.skyshop.Product.DiscountedProduct;
-import org.skypro.skyshop.Product.FixPriceProduct;
-import org.skypro.skyshop.Product.SimpleProduct;
-import org.skypro.skyshop.Tools.SearchEngine;
-import org.skypro.skyshop.Tools.Searchable;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
+import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.productBasket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.tools.SearchEngine;
+import org.skypro.skyshop.tools.Searchable;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFound {

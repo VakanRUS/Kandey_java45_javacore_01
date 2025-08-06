@@ -1,4 +1,4 @@
-package org.skypro.skyshop.Exceptions;
+package org.skypro.skyshop.exceptions;
 
 public class BestResultNotFound extends Throwable {
 
