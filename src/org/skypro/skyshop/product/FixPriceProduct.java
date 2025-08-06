@@ -1,5 +1,7 @@
 package org.skypro.skyshop.product;
 
+import java.util.Objects;
+
 public class FixPriceProduct extends Product {
     private final int FIXED_PRICE = 50;
 
